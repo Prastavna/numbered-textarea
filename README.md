@@ -63,6 +63,8 @@ customElements.define("my-editor", NumberedTextarea);
 
 ## React
 
+### Basic usage
+
 ```tsx
 import { NumberedTextarea } from "numbered-textarea/react";
 
@@ -75,6 +77,64 @@ function Editor() {
     />
   );
 }
+```
+
+### Controlled + ref + event handling
+
+```tsx
+import { useRef, useState } from "react";
+import { NumberedTextarea, type NumberedTextareaRef } from "numbered-textarea/react";
+
+function Editor() {
+  const [lineCount, setLineCount] = useState(0);
+  const editorRef = useRef<NumberedTextareaRef>(null);
+
+  return (
+    <div>
+      <NumberedTextarea
+        ref={editorRef}
+        defaultValue={"function hello() {\n  return 'world';\n}"}
+        placeholder="Write some code..."
+        onInput={(_value, count) => setLineCount(count)}
+        style={{ width: "100%", height: "300px" }}
+      />
+      <p>Lines: {lineCount}</p>
+      <button onClick={() => editorRef.current?.focus()}>Focus editor</button>
+    </div>
+  );
+}
+```
+
+### Dark theme via className
+
+```tsx
+<NumberedTextarea
+  className="dark-theme"
+  defaultValue={'const greeting = "Hello!";\nconsole.log(greeting);'}
+  style={{ width: "100%", height: "200px" }}
+/>
+```
+
+```css
+.dark-theme {
+  --nt-bg: #1e1e1e;
+  --nt-color: #d4d4d4;
+  --nt-gutter-bg: #252526;
+  --nt-gutter-color: #858585;
+  --nt-gutter-border: 1px solid #333;
+  --nt-border: 1px solid #333;
+  --nt-font-family: "Fira Code", monospace;
+}
+```
+
+### Read-only
+
+```tsx
+<NumberedTextarea
+  readOnly
+  value={"// This content is read-only\nconst x = 42;"}
+  style={{ width: "100%", height: "120px" }}
+/>
 ```
 
 ### Props
@@ -94,29 +154,11 @@ function Editor() {
 
 ### Ref
 
-Use a ref to access the underlying element:
-
-```tsx
-import { useRef } from "react";
-import { NumberedTextarea, type NumberedTextareaRef } from "numbered-textarea/react";
-
-function Editor() {
-  const ref = useRef<NumberedTextareaRef>(null);
-
-  return (
-    <>
-      <NumberedTextarea ref={ref} />
-      <button onClick={() => ref.current?.focus()}>Focus</button>
-      <span>Lines: {ref.current?.lineCount}</span>
-    </>
-  );
-}
-```
-
 | Ref property | Type               | Description                   |
 | ------------ | ------------------ | ----------------------------- |
 | `element`    | `NumberedTextarea` | The underlying custom element |
 | `lineCount`  | `number`           | Current line count            |
+| `focus()`    | `() => void`       | Focus the textarea            |
 | `focus()`    | `() => void`       | Focus the textarea            |
 
 ---
