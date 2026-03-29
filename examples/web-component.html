@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>numbered-textarea — Web Component Example</title>
+    <style>
+      body {
+        font-family: system-ui, sans-serif;
+        max-width: 800px;
+        margin: 40px auto;
+        padding: 0 20px;
+        background: #fafafa;
+        color: #333;
+      }
+
+      h1 {
+        font-size: 1.5rem;
+      }
+      h2 {
+        font-size: 1.1rem;
+        margin-top: 2rem;
+        color: #555;
+      }
+
+      /* ── Default ── */
+      numbered-textarea {
+        width: 100%;
+        height: 300px;
+      }
+
+      /* ── Dark theme using CSS custom properties ── */
+      .dark-theme {
+        --nt-bg: #1e1e1e;
+        --nt-color: #d4d4d4;
+        --nt-gutter-bg: #252526;
+        --nt-gutter-color: #858585;
+        --nt-gutter-border: 1px solid #333;
+        --nt-border: 1px solid #333;
+        --nt-font-family: "Fira Code", "Cascadia Code", monospace;
+        --nt-font-size: 13px;
+        --nt-placeholder-color: #555;
+      }
+
+      /* ── Styled with ::part() ── */
+      .styled-parts::part(gutter) {
+        background: #e8f0fe;
+        color: #1a73e8;
+        font-weight: bold;
+      }
+
+      .styled-parts::part(textarea) {
+        background: #f8f9fa;
+        color: #202124;
+      }
+
+      .info {
+        font-size: 0.85rem;
+        color: #777;
+        margin-top: 4px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>&lt;numbered-textarea&gt; Web Component</h1>
+
+    <h2>Default</h2>
+    <numbered-textarea id="demo" placeholder="Type some code here..."></numbered-textarea>
+    <p class="info">Lines: <span id="line-count">1</span></p>
+
+    <h2>Dark Theme (CSS Custom Properties)</h2>
+    <numbered-textarea
+      class="dark-theme"
+      value="function greet(name) {&#10;  console.log(`Hello, ${name}!`);&#10;}&#10;&#10;greet('World');"
+    ></numbered-textarea>
+
+    <h2>Styled with ::part()</h2>
+    <numbered-textarea
+      class="styled-parts"
+      value="// Blue gutter styling via ::part(gutter)&#10;// Light background via ::part(textarea)&#10;const x = 42;"
+    ></numbered-textarea>
+
+    <h2>Readonly</h2>
+    <numbered-textarea
+      readonly
+      value="This content is read-only.&#10;You cannot edit it."
+    ></numbered-textarea>
+
+    <script type="module">
+      import { register } from "../src/index.ts";
+      register();
+
+      const demo = document.getElementById("demo");
+      const lineCount = document.getElementById("line-count");
+
+      demo.addEventListener("nt-input", (e) => {
+        lineCount.textContent = e.detail.lineCount;
+      });
+    </script>
+  </body>
+</html>
