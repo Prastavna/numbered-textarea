@@ -4,8 +4,19 @@ import { defineConfig } from "vite-plus";
 const isCustomElement = (tag: string) => tag === "numbered-textarea";
 
 export default defineConfig({
+  base: "./",
   staged: {
     "*": "vp check --fix",
+  },
+  build: {
+    rollupOptions: {
+      input: {
+        index: "index.html",
+        react: "examples/react.html",
+        vue: "examples/vue.html",
+        webComponent: "examples/web-component.html",
+      },
+    },
   },
   pack: {
     entry: {
