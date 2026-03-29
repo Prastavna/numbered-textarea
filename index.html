@@ -3,26 +3,301 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>numbered-textarea — Examples</title>
+    <title>numbered-textarea - Examples and Docs</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <style>
-      body {
-        font-family: system-ui, sans-serif;
-        max-width: 600px;
-        margin: 80px auto;
-        padding: 0 20px;
+      :root {
+        color-scheme: light;
       }
-      a {
-        display: block;
-        margin: 12px 0;
-        font-size: 1.1rem;
+
+      body {
+        font-family: "Quicksand", sans-serif;
+        background: #f7f7f5;
+      }
+
+      code,
+      pre {
+        font-family: "Fira Code", "Cascadia Code", "JetBrains Mono", monospace;
       }
     </style>
   </head>
-  <body>
-    <h1>numbered-textarea</h1>
-    <p>Pick an example:</p>
-    <a href="./examples/web-component.html">Web Component</a>
-    <a href="./examples/react.html">React</a>
-    <a href="./examples/vue.html">Vue</a>
+  <body class="text-stone-900 antialiased">
+    <main class="mx-auto max-w-5xl px-6 py-10 sm:px-8 lg:px-10">
+      <section class="border-b border-stone-200 pb-10">
+        <div class="grid gap-8 lg:grid-cols-[1.25fr_0.95fr] lg:items-start">
+          <div class="space-y-6">
+            <p class="text-sm font-semibold uppercase tracking-[0.24em] text-stone-500">
+              Line-numbered textarea for the web
+            </p>
+            <div class="space-y-4">
+              <h1 class="text-4xl font-semibold tracking-tight text-stone-950 sm:text-5xl">
+                numbered-textarea
+              </h1>
+              <p class="max-w-2xl text-lg leading-8 text-stone-600">
+                A textarea with line numbers for Web Components, React, and Vue. It keeps native
+                textarea behavior, adds line count ergonomics, and stays easy to style.
+              </p>
+            </div>
+            <div class="flex flex-wrap gap-3">
+              <a
+                class="rounded-full bg-stone-950 px-5 py-3 text-sm font-semibold text-white transition hover:bg-stone-800"
+                href="./examples/web-component.html"
+              >
+                Web example
+              </a>
+              <a
+                class="rounded-full border border-stone-300 px-5 py-3 text-sm font-semibold text-stone-800 transition hover:border-stone-400 hover:bg-white"
+                href="./examples/react.html"
+              >
+                React example
+              </a>
+              <a
+                class="rounded-full border border-stone-300 px-5 py-3 text-sm font-semibold text-stone-800 transition hover:border-stone-400 hover:bg-white"
+                href="./examples/vue.html"
+              >
+                Vue example
+              </a>
+            </div>
+          </div>
+
+          <div class="rounded-3xl border border-stone-200 bg-white p-5">
+            <p class="text-xs font-semibold uppercase tracking-[0.22em] text-stone-500">
+              Quick Start
+            </p>
+            <pre
+              class="mt-4 overflow-x-auto rounded-2xl bg-stone-950 p-4 text-sm leading-7 text-stone-100"
+            ><code>vp add numbered-textarea
+
+import { NumberedTextarea } from "numbered-textarea/react";
+
+export function Editor() {
+  return (
+    &lt;NumberedTextarea
+      defaultValue={"const x = 1;"}
+      style={{ width: "100%", height: "320px" }}
+    /&gt;
+  );
+}</code></pre>
+            <p class="mt-4 text-sm leading-7 text-stone-600">
+              Import only the wrapper you need with framework-specific subpaths.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section class="mt-10 grid gap-4 md:grid-cols-3">
+        <a
+          class="rounded-3xl border border-stone-200 bg-white p-6 transition hover:border-stone-300"
+          href="./examples/web-component.html"
+        >
+          <p class="text-xs font-semibold uppercase tracking-[0.2em] text-stone-500">Vanilla</p>
+          <h2 class="mt-3 text-2xl font-semibold text-stone-950">Web Component</h2>
+          <p class="mt-3 text-sm leading-7 text-stone-600">
+            Register once and style it with CSS variables or Shadow parts.
+          </p>
+        </a>
+        <a
+          class="rounded-3xl border border-stone-200 bg-white p-6 transition hover:border-stone-300"
+          href="./examples/react.html"
+        >
+          <p class="text-xs font-semibold uppercase tracking-[0.2em] text-stone-500">Component</p>
+          <h2 class="mt-3 text-2xl font-semibold text-stone-950">React</h2>
+          <p class="mt-3 text-sm leading-7 text-stone-600">
+            Use controlled or uncontrolled state, refs, and line count callbacks.
+          </p>
+        </a>
+        <a
+          class="rounded-3xl border border-stone-200 bg-white p-6 transition hover:border-stone-300"
+          href="./examples/vue.html"
+        >
+          <p class="text-xs font-semibold uppercase tracking-[0.2em] text-stone-500">Wrapper</p>
+          <h2 class="mt-3 text-2xl font-semibold text-stone-950">Vue</h2>
+          <p class="mt-3 text-sm leading-7 text-stone-600">
+            Works with `v-model`, template refs, and the same styling surface.
+          </p>
+        </a>
+      </section>
+
+      <section class="mt-10 grid gap-8 lg:grid-cols-[0.9fr_1.1fr]">
+        <div class="rounded-3xl border border-stone-200 bg-white p-6">
+          <p class="text-xs font-semibold uppercase tracking-[0.22em] text-stone-500">Install</p>
+          <pre
+            class="mt-4 overflow-x-auto rounded-2xl bg-stone-950 p-4 text-sm leading-7 text-stone-100"
+          ><code>vp add numbered-textarea</code></pre>
+
+          <p class="mt-6 text-xs font-semibold uppercase tracking-[0.22em] text-stone-500">
+            Web Component
+          </p>
+          <pre
+            class="mt-4 overflow-x-auto rounded-2xl bg-stone-950 p-4 text-sm leading-7 text-stone-100"
+          ><code>import { register } from "numbered-textarea/web";
+
+register();</code></pre>
+          <pre
+            class="mt-4 overflow-x-auto rounded-2xl bg-stone-100 p-4 text-sm leading-7 text-stone-800"
+          ><code>&lt;numbered-textarea
+  placeholder="Write some code..."
+&gt;&lt;/numbered-textarea&gt;</code></pre>
+
+          <p class="mt-6 text-xs font-semibold uppercase tracking-[0.22em] text-stone-500">React</p>
+          <pre
+            class="mt-4 overflow-x-auto rounded-2xl bg-stone-100 p-4 text-sm leading-7 text-stone-800"
+          ><code>import { NumberedTextarea } from "numbered-textarea/react";
+
+&lt;NumberedTextarea
+  defaultValue="const x = 1;"
+  onInput={(value, lineCount) =&gt; console.log(lineCount)}
+  style={{ width: "100%", height: "300px" }}
+/&gt;</code></pre>
+
+          <p class="mt-6 text-xs font-semibold uppercase tracking-[0.22em] text-stone-500">Vue</p>
+          <pre
+            class="mt-4 overflow-x-auto rounded-2xl bg-stone-100 p-4 text-sm leading-7 text-stone-800"
+          ><code>&lt;script setup&gt;
+import { NumberedTextarea } from "numbered-textarea/vue";
+&lt;/script&gt;
+
+&lt;template&gt;
+  &lt;NumberedTextarea
+    default-value="const x = 1;"
+    style="width: 100%; height: 300px"
+  /&gt;
+&lt;/template&gt;</code></pre>
+        </div>
+
+        <div class="space-y-8">
+          <div class="rounded-3xl border border-stone-200 bg-white p-6">
+            <p class="text-xs font-semibold uppercase tracking-[0.22em] text-stone-500">
+              Common API
+            </p>
+            <div class="mt-4 overflow-hidden rounded-2xl border border-stone-200">
+              <table class="min-w-full divide-y divide-stone-200 text-left text-sm">
+                <thead class="bg-stone-50 text-stone-600">
+                  <tr>
+                    <th class="px-4 py-3 font-semibold">Input</th>
+                    <th class="px-4 py-3 font-semibold">Type</th>
+                    <th class="px-4 py-3 font-semibold">Notes</th>
+                  </tr>
+                </thead>
+                <tbody class="divide-y divide-stone-200 bg-white text-stone-700">
+                  <tr>
+                    <td class="px-4 py-3"><code>value</code></td>
+                    <td class="px-4 py-3"><code>string</code></td>
+                    <td class="px-4 py-3">Controlled content.</td>
+                  </tr>
+                  <tr>
+                    <td class="px-4 py-3"><code>defaultValue</code></td>
+                    <td class="px-4 py-3"><code>string</code></td>
+                    <td class="px-4 py-3">Initial content for uncontrolled usage.</td>
+                  </tr>
+                  <tr>
+                    <td class="px-4 py-3"><code>placeholder</code></td>
+                    <td class="px-4 py-3"><code>string</code></td>
+                    <td class="px-4 py-3">Shown when the textarea is empty.</td>
+                  </tr>
+                  <tr>
+                    <td class="px-4 py-3"><code>readOnly</code> / <code>readonly</code></td>
+                    <td class="px-4 py-3"><code>boolean</code></td>
+                    <td class="px-4 py-3">Prevents editing.</td>
+                  </tr>
+                  <tr>
+                    <td class="px-4 py-3"><code>disabled</code></td>
+                    <td class="px-4 py-3"><code>boolean</code></td>
+                    <td class="px-4 py-3">Disables interaction.</td>
+                  </tr>
+                  <tr>
+                    <td class="px-4 py-3"><code>wrap</code></td>
+                    <td class="px-4 py-3"><code>off | soft | hard</code></td>
+                    <td class="px-4 py-3">Matches native textarea wrapping behavior.</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="rounded-3xl border border-stone-200 bg-white p-6">
+            <p class="text-xs font-semibold uppercase tracking-[0.22em] text-stone-500">
+              Events and Refs
+            </p>
+            <div class="mt-4 grid gap-4 md:grid-cols-2">
+              <div class="rounded-2xl bg-stone-50 p-4">
+                <h3 class="text-base font-semibold text-stone-950">Events</h3>
+                <p class="mt-2 text-sm leading-7 text-stone-600">
+                  Web Component emits <code>nt-input</code> with <code>{ value, lineCount }</code>.
+                  React and Vue wrappers expose <code>onInput</code> and <code>@input</code> with
+                  the same data.
+                </p>
+              </div>
+              <div class="rounded-2xl bg-stone-50 p-4">
+                <h3 class="text-base font-semibold text-stone-950">Refs</h3>
+                <p class="mt-2 text-sm leading-7 text-stone-600">
+                  React refs and Vue template refs expose focus helpers plus access to the
+                  underlying custom element and current line count.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="rounded-3xl border border-stone-200 bg-white p-6">
+            <p class="text-xs font-semibold uppercase tracking-[0.22em] text-stone-500">Styling</p>
+            <p class="mt-4 text-sm leading-7 text-stone-600">
+              Style all variants with CSS custom properties or direct Shadow DOM part selectors.
+            </p>
+            <pre
+              class="mt-4 overflow-x-auto rounded-2xl bg-stone-950 p-4 text-sm leading-7 text-stone-100"
+            ><code>.dark-theme {
+  --nt-bg: #1e1e1e;
+  --nt-color: #d4d4d4;
+  --nt-gutter-bg: #252526;
+  --nt-gutter-color: #858585;
+  --nt-gutter-border: 1px solid #333;
+  --nt-border: 1px solid #333;
+}
+
+numbered-textarea::part(gutter) {
+  background: #e8f0fe;
+  color: #1a73e8;
+}</code></pre>
+          </div>
+        </div>
+      </section>
+
+      <section class="mt-10 rounded-3xl border border-stone-200 bg-white px-6 py-8">
+        <div class="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
+          <div>
+            <p class="text-xs font-semibold uppercase tracking-[0.22em] text-stone-500">
+              Development
+            </p>
+            <h2 class="mt-3 text-3xl font-semibold text-stone-950">Run locally</h2>
+            <p class="mt-3 max-w-2xl text-sm leading-7 text-stone-600">
+              Use Vite+ for install, build, checks, and tests in this repository.
+            </p>
+          </div>
+          <a
+            class="rounded-full border border-stone-300 px-5 py-3 text-sm font-semibold text-stone-800 transition hover:border-stone-400 hover:bg-stone-50"
+            href="https://github.com/prastavna/numbered-textarea"
+          >
+            View repository
+          </a>
+        </div>
+        <div class="mt-6 grid gap-4 md:grid-cols-3">
+          <pre
+            class="overflow-x-auto rounded-2xl bg-stone-100 p-4 text-sm leading-7 text-stone-800"
+          ><code>vp install</code></pre>
+          <pre
+            class="overflow-x-auto rounded-2xl bg-stone-100 p-4 text-sm leading-7 text-stone-800"
+          ><code>vp test</code></pre>
+          <pre
+            class="overflow-x-auto rounded-2xl bg-stone-100 p-4 text-sm leading-7 text-stone-800"
+          ><code>vp check</code></pre>
+        </div>
+      </section>
+    </main>
   </body>
 </html>
