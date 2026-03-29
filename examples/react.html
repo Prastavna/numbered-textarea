@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>numbered-textarea — React Example</title>
+    <style>
+      .dark-theme {
+        --nt-bg: #1e1e1e;
+        --nt-color: #d4d4d4;
+        --nt-gutter-bg: #252526;
+        --nt-gutter-color: #858585;
+        --nt-gutter-border: 1px solid #333;
+        --nt-border: 1px solid #333;
+        --nt-font-family: "Fira Code", "Cascadia Code", monospace;
+        --nt-font-size: 13px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module">
+      import { createElement } from "react";
+      import { createRoot } from "react-dom/client";
+      import { App } from "./react.tsx";
+      createRoot(document.getElementById("root")).render(createElement(App));
+    </script>
+  </body>
+</html>

@@ -1,5 +1,5 @@
 import { afterEach, beforeEach, describe, expect, test, vi } from "vite-plus/test";
-import { NumberedTextarea, register } from "../src/index.ts";
+import { NumberedTextarea, register } from "../../src/web/index.ts";
 
 function getGutter(el: NumberedTextarea): HTMLElement {
   return el.shadowRoot!.querySelector(".gutter")!;

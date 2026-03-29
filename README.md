@@ -1,61 +1,42 @@
 # numbered-textarea
 
-A textarea with line numbers — like VS Code, but as a drop-in component. Available as a Web Component (with React and Vue wrappers coming soon).
+A textarea with line numbers — like VS Code, but as a drop-in component. Available as a **Web Component** and **React** component (Vue coming soon).
+
+Each framework has its own subpath import — only import what you use.
 
 ## Install
 
 ```bash
 npm install numbered-textarea
-# or
-pnpm add numbered-textarea
-# or
-yarn add numbered-textarea
 ```
 
-## Quick Start
+## Web Component
 
-### Web Component
+```js
+import { register } from "numbered-textarea/web";
+register();
+```
 
 ```html
-<script type="module">
-  import { register } from "numbered-textarea";
-  register();
-</script>
-
 <numbered-textarea placeholder="Write some code..."></numbered-textarea>
 ```
 
-```js
-// Or in a JS/TS module
-import { register } from "numbered-textarea";
-register();
+### API
 
-const el = document.querySelector("numbered-textarea");
-el.value = "const x = 1;\nconst y = 2;";
-console.log(el.lineCount); // 2
-```
+#### `register(tagName?: string)`
 
-## API
+Registers the custom element. Call once before using the tag. Idempotent.
 
-### `register(tagName?: string): typeof NumberedTextarea`
+#### `NumberedTextarea` class
 
-Registers the custom element. Call once before using the tag. Safe to call multiple times — subsequent calls are no-ops.
+The custom element class, also available for direct use:
 
 ```js
-register(); // registers <numbered-textarea>
-register("code-editor"); // registers <code-editor>
-```
-
-### `NumberedTextarea` class
-
-The custom element class. You can also extend it or use it directly:
-
-```js
-import { NumberedTextarea } from "numbered-textarea";
+import { NumberedTextarea } from "numbered-textarea/web";
 customElements.define("my-editor", NumberedTextarea);
 ```
 
-### Attributes
+#### Attributes
 
 | Attribute     | Type      | Description                                               |
 | ------------- | --------- | --------------------------------------------------------- |
@@ -65,54 +46,110 @@ customElements.define("my-editor", NumberedTextarea);
 | `disabled`    | `boolean` | Disables the textarea                                     |
 | `wrap`        | `string`  | Wrapping behavior (`off`, `soft`, `hard`). Default: `off` |
 
-### Properties
+#### Properties
 
 | Property    | Type     | Description                        |
 | ----------- | -------- | ---------------------------------- |
 | `value`     | `string` | Get/set the text content           |
 | `lineCount` | `number` | Read-only count of lines (1-based) |
 
-### Events
+#### Events
 
 | Event      | Detail                                 | Description                 |
 | ---------- | -------------------------------------- | --------------------------- |
 | `nt-input` | `{ value: string, lineCount: number }` | Fires on every input change |
 
-```js
-editor.addEventListener("nt-input", (e) => {
-  console.log(e.detail.lineCount);
-});
+---
+
+## React
+
+```tsx
+import { NumberedTextarea } from "numbered-textarea/react";
+
+function Editor() {
+  return (
+    <NumberedTextarea
+      defaultValue="const x = 1;"
+      onInput={(value, lineCount) => console.log(lineCount)}
+      style={{ width: "100%", height: "300px" }}
+    />
+  );
+}
 ```
+
+### Props
+
+| Prop           | Type                                         | Description                           |
+| -------------- | -------------------------------------------- | ------------------------------------- |
+| `value`        | `string`                                     | Controlled value                      |
+| `defaultValue` | `string`                                     | Initial value (uncontrolled)          |
+| `placeholder`  | `string`                                     | Placeholder text                      |
+| `readOnly`     | `boolean`                                    | Read-only mode                        |
+| `disabled`     | `boolean`                                    | Disabled mode                         |
+| `wrap`         | `string`                                     | Wrap behavior (`off`, `soft`, `hard`) |
+| `onInput`      | `(value: string, lineCount: number) => void` | Called on every keystroke             |
+| `onChange`     | `(value: string, lineCount: number) => void` | Alias for onInput                     |
+| `className`    | `string`                                     | CSS class on host element             |
+| `style`        | `CSSProperties`                              | Inline styles on host element         |
+
+### Ref
+
+Use a ref to access the underlying element:
+
+```tsx
+import { useRef } from "react";
+import { NumberedTextarea, type NumberedTextareaRef } from "numbered-textarea/react";
+
+function Editor() {
+  const ref = useRef<NumberedTextareaRef>(null);
+
+  return (
+    <>
+      <NumberedTextarea ref={ref} />
+      <button onClick={() => ref.current?.focus()}>Focus</button>
+      <span>Lines: {ref.current?.lineCount}</span>
+    </>
+  );
+}
+```
+
+| Ref property | Type               | Description                   |
+| ------------ | ------------------ | ----------------------------- |
+| `element`    | `NumberedTextarea` | The underlying custom element |
+| `lineCount`  | `number`           | Current line count            |
+| `focus()`    | `() => void`       | Focus the textarea            |
+
+---
 
 ## Styling
 
-The component uses Shadow DOM but provides two ways to customize its appearance from the outside.
+Both the web component and React component support the same styling options. The component uses Shadow DOM with CSS custom properties and `::part()` selectors for full customization.
 
 ### CSS Custom Properties
 
-Set these on the `<numbered-textarea>` element or any ancestor:
+Set these on the element or any ancestor:
 
-| Property                 | Default            | Description            |
-| ------------------------ | ------------------ | ---------------------- |
-| `--nt-font-family`       | `monospace`        | Font family            |
-| `--nt-font-size`         | `14px`             | Font size              |
-| `--nt-line-height`       | `1.5`              | Line height            |
-| `--nt-border`            | `1px solid #ccc`   | Outer border           |
-| `--nt-border-radius`     | `4px`              | Border radius          |
-| `--nt-bg`                | `#fff`             | Textarea background    |
-| `--nt-color`             | `#333`             | Textarea text color    |
-| `--nt-padding`           | `8px`              | Textarea padding       |
-| `--nt-placeholder-color` | `#aaa`             | Placeholder text color |
-| `--nt-gutter-bg`         | `#f5f5f5`          | Gutter background      |
-| `--nt-gutter-color`      | `#999`             | Gutter text color      |
-| `--nt-gutter-border`     | `1px solid #ddd`   | Gutter right border    |
-| `--nt-gutter-padding`    | `8px 12px 8px 8px` | Gutter padding         |
-| `--nt-gutter-min-width`  | `40px`             | Gutter minimum width   |
+| Property                 | Default            | Description          |
+| ------------------------ | ------------------ | -------------------- |
+| `--nt-font-family`       | `monospace`        | Font family          |
+| `--nt-font-size`         | `14px`             | Font size            |
+| `--nt-line-height`       | `1.5`              | Line height          |
+| `--nt-border`            | `1px solid #ccc`   | Outer border         |
+| `--nt-border-radius`     | `4px`              | Border radius        |
+| `--nt-bg`                | `#fff`             | Textarea background  |
+| `--nt-color`             | `#333`             | Text color           |
+| `--nt-padding`           | `8px`              | Textarea padding     |
+| `--nt-placeholder-color` | `#aaa`             | Placeholder color    |
+| `--nt-gutter-bg`         | `#f5f5f5`          | Gutter background    |
+| `--nt-gutter-color`      | `#999`             | Gutter text color    |
+| `--nt-gutter-border`     | `1px solid #ddd`   | Gutter right border  |
+| `--nt-gutter-padding`    | `8px 12px 8px 8px` | Gutter padding       |
+| `--nt-gutter-min-width`  | `40px`             | Gutter minimum width |
 
-**Example — dark theme:**
+**Dark theme example:**
 
 ```css
-numbered-textarea {
+.dark-theme {
   --nt-bg: #1e1e1e;
   --nt-color: #d4d4d4;
   --nt-gutter-bg: #252526;
@@ -125,7 +162,7 @@ numbered-textarea {
 
 ### `::part()` Selectors
 
-For full CSS control, target Shadow DOM parts directly:
+Target Shadow DOM parts directly for full CSS control:
 
 | Part          | Element                   |
 | ------------- | ------------------------- |
@@ -134,23 +171,17 @@ For full CSS control, target Shadow DOM parts directly:
 | `textarea`    | The `<textarea>`          |
 | `line-number` | Each line number `<span>` |
 
-**Example:**
-
 ```css
 numbered-textarea::part(gutter) {
   background: #e8f0fe;
   color: #1a73e8;
   font-weight: bold;
 }
-
-numbered-textarea::part(textarea) {
-  background: #f8f9fa;
-}
 ```
 
-## Sizing
+### Sizing
 
-The component respects standard CSS sizing. Set `width` and `height` on the element:
+Set `width` and `height` on the element (or via `style` prop in React):
 
 ```css
 numbered-textarea {
@@ -159,25 +190,29 @@ numbered-textarea {
 }
 ```
 
+---
+
 ## Examples
 
-See the [`examples/`](./examples/) directory for live demos:
+See [`examples/`](./examples/) for live demos:
 
-- **[`web-component.html`](./examples/web-component.html)** — Default, dark theme, `::part()` styling, and readonly usage
+- [`web-component.html`](./examples/web-component.html) — vanilla JS usage with themes
+- [`react.html`](./examples/react.html) — React usage with controlled/uncontrolled modes
 
-Run with:
+Run locally:
 
 ```bash
 npx vp dev
-# open examples/web-component.html in your browser
+# open examples/web-component.html or examples/react.html
 ```
 
 ## Development
 
 ```bash
 pnpm install
-pnpm test        # run tests
+pnpm test        # run tests (31 tests: 17 web + 14 react)
 pnpm run build   # build the library
+pnpm run check   # lint + type check
 ```
 
 ## License

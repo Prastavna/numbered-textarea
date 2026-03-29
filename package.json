@@ -1,23 +1,24 @@
 {
   "name": "numbered-textarea",
   "version": "0.0.0",
-  "description": "A starter for creating a TypeScript package.",
-  "homepage": "https://github.com/author/library#readme",
+  "description": "A textarea with line numbers. Available as Web Component, React, and Vue.",
+  "homepage": "https://github.com/prastavna/numbered-textarea#readme",
   "bugs": {
-    "url": "https://github.com/author/library/issues"
+    "url": "https://github.com/prastavna/numbered-textarea/issues"
   },
   "license": "MIT",
-  "author": "Author Name <author.name@mail.com>",
+  "author": "Prastavna <hello@prastavna.com>",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/author/library.git"
+    "url": "git+https://github.com/prastavna/numbered-textarea.git"
   },
   "files": [
     "dist"
   ],
   "type": "module",
   "exports": {
-    ".": "./dist/index.mjs",
+    "./react": "./dist/react.mjs",
+    "./web": "./dist/web.mjs",
     "./package.json": "./package.json"
   },
   "publishConfig": {
@@ -32,12 +33,25 @@
     "prepare": "vp config"
   },
   "devDependencies": {
+    "@testing-library/react": "^16.3.0",
     "@types/node": "^25.5.0",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
     "@typescript/native-preview": "7.0.0-dev.20260328.1",
     "bumpp": "^11.0.1",
     "happy-dom": "^20.8.9",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
     "typescript": "^6.0.2",
     "vite-plus": "^0.1.14"
+  },
+  "peerDependencies": {
+    "react": ">=18.0.0"
+  },
+  "peerDependenciesMeta": {
+    "react": {
+      "optional": true
+    }
   },
   "packageManager": "pnpm@10.33.0",
   "pnpm": {

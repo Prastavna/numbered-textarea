@@ -5,10 +5,17 @@ export default defineConfig({
     "*": "vp check --fix",
   },
   pack: {
+    entry: {
+      web: "src/web/index.ts",
+      react: "src/react/index.tsx",
+    },
     dts: {
       tsgo: true,
     },
     exports: true,
+    deps: {
+      neverBundle: ["react"],
+    },
   },
   test: {
     environment: "happy-dom",
