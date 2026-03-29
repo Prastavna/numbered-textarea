@@ -1,6 +1,6 @@
 # numbered-textarea
 
-A textarea with line numbers — like VS Code, but as a drop-in component. Available as a **Web Component** and **React** component (Vue coming soon).
+A textarea with line numbers — like VS Code, but as a drop-in component. Available as a **Web Component**, **React**, and **Vue** component.
 
 Each framework has its own subpath import — only import what you use.
 
@@ -159,13 +159,115 @@ function Editor() {
 | `element`    | `NumberedTextarea` | The underlying custom element |
 | `lineCount`  | `number`           | Current line count            |
 | `focus()`    | `() => void`       | Focus the textarea            |
-| `focus()`    | `() => void`       | Focus the textarea            |
+
+---
+
+## Vue
+
+### Basic usage
+
+```vue
+<script setup>
+import { NumberedTextarea } from "numbered-textarea/vue";
+</script>
+
+<template>
+  <NumberedTextarea
+    default-value="const x = 1;"
+    placeholder="Write some code..."
+    style="width: 100%; height: 300px"
+    @input="(value, lineCount) => console.log(lineCount)"
+  />
+</template>
+```
+
+### v-model + ref + events
+
+```vue
+<script setup lang="ts">
+import { ref } from "vue";
+import { NumberedTextarea } from "numbered-textarea/vue";
+
+const code = ref("function hello() {\n  return 'world';\n}");
+const lineCount = ref(0);
+const editorRef = ref<{ focus: () => void } | null>(null);
+</script>
+
+<template>
+  <NumberedTextarea
+    ref="editorRef"
+    v-model="code"
+    style="width: 100%; height: 300px"
+    @input="(_v: string, count: number) => (lineCount = count)"
+  />
+  <p>Lines: {{ lineCount }}</p>
+  <button @click="editorRef?.focus()">Focus editor</button>
+</template>
+```
+
+### Dark theme via class
+
+```vue
+<NumberedTextarea
+  class="dark-theme"
+  default-value='const greeting = "Hello!";'
+  style="width: 100%; height: 200px"
+/>
+```
+
+```css
+.dark-theme {
+  --nt-bg: #1e1e1e;
+  --nt-color: #d4d4d4;
+  --nt-gutter-bg: #252526;
+  --nt-gutter-color: #858585;
+  --nt-gutter-border: 1px solid #333;
+  --nt-border: 1px solid #333;
+  --nt-font-family: "Fira Code", monospace;
+}
+```
+
+### Read-only
+
+```vue
+<NumberedTextarea
+  readonly
+  model-value="// Read-only content\nconst x = 42;"
+  style="width: 100%; height: 120px"
+/>
+```
+
+### Props
+
+| Prop           | Type      | Description                           |
+| -------------- | --------- | ------------------------------------- |
+| `modelValue`   | `string`  | Controlled value (use with `v-model`) |
+| `defaultValue` | `string`  | Initial value (uncontrolled)          |
+| `placeholder`  | `string`  | Placeholder text                      |
+| `readonly`     | `boolean` | Read-only mode                        |
+| `disabled`     | `boolean` | Disabled mode                         |
+| `wrap`         | `string`  | Wrap behavior (`off`, `soft`, `hard`) |
+
+### Events
+
+| Event               | Payload                              | Description               |
+| ------------------- | ------------------------------------ | ------------------------- |
+| `update:modelValue` | `string`                             | For `v-model` binding     |
+| `input`             | `(value: string, lineCount: number)` | Called on every keystroke |
+
+### Expose (template ref)
+
+| Property    | Type             | Description                   |
+| ----------- | ---------------- | ----------------------------- |
+| `element`   | `Ref<NTElement>` | The underlying custom element |
+| `lineCount` | `() => number`   | Get current line count        |
+| `focus()`   | `() => void`     | Focus the textarea            |
 
 ---
 
 ## Styling
 
-Both the web component and React component support the same styling options. The component uses Shadow DOM with CSS custom properties and `::part()` selectors for full customization.
+All three components (Web Component, React, Vue) support the same styling options. The component uses Shadow DOM with CSS custom properties and `::part()` selectors for full customization.
 
 ### CSS Custom Properties
 
@@ -240,19 +342,20 @@ See [`examples/`](./examples/) for live demos:
 
 - [`web-component.html`](./examples/web-component.html) — vanilla JS usage with themes
 - [`react.html`](./examples/react.html) — React usage with controlled/uncontrolled modes
+- [`vue.html`](./examples/vue.html) — Vue usage with v-model and events
 
 Run locally:
 
 ```bash
 npx vp dev
-# open examples/web-component.html or examples/react.html
+# then open http://localhost:5173
 ```
 
 ## Development
 
 ```bash
 pnpm install
-pnpm test        # run tests (31 tests: 17 web + 14 react)
+pnpm test        # run tests (44 tests: 17 web + 14 react + 13 vue)
 pnpm run build   # build the library
 pnpm run check   # lint + type check
 ```

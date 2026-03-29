@@ -1,4 +1,7 @@
+import vue from "@vitejs/plugin-vue";
 import { defineConfig } from "vite-plus";
+
+const isCustomElement = (tag: string) => tag === "numbered-textarea";
 
 export default defineConfig({
   staged: {
@@ -8,18 +11,27 @@ export default defineConfig({
     entry: {
       web: "src/web/index.ts",
       react: "src/react/index.tsx",
+      vue: "src/vue/index.ts",
     },
-    dts: {
-      tsgo: true,
-    },
+    dts: true,
     exports: true,
     deps: {
-      neverBundle: ["react"],
+      neverBundle: ["react", "vue"],
     },
   },
   test: {
     environment: "happy-dom",
+    server: {
+      deps: {
+        inline: ["vue"],
+      },
+    },
   },
+  plugins: [
+    vue({
+      template: { compilerOptions: { isCustomElement } },
+    }),
+  ],
   lint: {
     options: {
       typeAware: true,
