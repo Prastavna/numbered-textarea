@@ -4,6 +4,10 @@ A textarea with line numbers — like VS Code, but as a drop-in component. Avail
 
 Each framework has its own subpath import — only import what you use.
 
+<p align="center">
+  <img src="./assets/screenshot.png" alt="Numbered Textarea" />
+</p>
+
 ## Install
 
 ```bash
